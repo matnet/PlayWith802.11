@@ -1,4 +1,4 @@
-# Rewritten by Matnet
+# Modified by Matnet
 # Email : mail@matnet.my
 # Please run monitore mode first before run the program
 # Usage : python dedepro.py mon0 legit-AP AP-MAC
