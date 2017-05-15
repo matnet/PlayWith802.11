@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+######################################################
+#	authWatch.py v. 0.1 (Quick, Dirty and Loud) - by TinMan
+#	Place card in monitor mode and set the channel. 
+#	If you want channel hopping, run airodump-ng in 
+#	another terminal. Will add channel hopping 
+# 	in the next version. 
+######################################################	
+#
+#	Usage: python authWatch.py 
+#	
+
+import sys
+from scapy import *
+
+interface = sys.argv[1]
+
+def sniffReq(p):
+     if p.haslayer(Dot11Deauth):
+# Look for a deauth packet and print the AP BSSID, Client BSSID and the reason for the deauth.
+           print p.sprintf("Deauth Found from AP [%Dot11.addr2%] Client [%Dot11.addr1%], Reason [%Dot11Deauth.reason%]")
+# Look for an association request packet and print the Station BSSID, Client BSSID, AP info.
+     if p.haslayer(Dot11AssoReq):
+           print p.sprintf("Association request from Station [%Dot11.addr1%], Client [%Dot11.addr2%], AP [%Dot11Elt.info%]")
+# Look for an authentication packet and print the Client and AP BSSID
+		   if p.haslayer(Dot11Auth):
+	   print p.sprintf("Authentication Request from [%Dot11.addr1%] to AP [%Dot11.addr2%]")
+ 	   print p.sprintf("------------------------------------------------------------------------------------------")
+sniff(iface=interface,prn=sniffReq)
